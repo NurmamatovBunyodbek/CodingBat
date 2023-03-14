@@ -18,5 +18,6 @@ public class TaskDto {
     private String template;
     private String answerText;
     private String solution;
+    private Integer userId;
 
 }

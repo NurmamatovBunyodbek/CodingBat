@@ -3,9 +3,11 @@ package uz.pdp.codingbat.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uz.pdp.codingbat.entity.Task;
+import uz.pdp.codingbat.entity.User;
 import uz.pdp.codingbat.payload.Result;
 import uz.pdp.codingbat.payload.TaskDto;
 import uz.pdp.codingbat.repository.TaskRepo;
+import uz.pdp.codingbat.repository.UserRepo;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,8 @@ public class TaskService {
 
     @Autowired
     TaskRepo taskRepo;
+    @Autowired
+    UserRepo userRepo;
 
     public List<Task> allTaskList() {
         List<Task> taskList = taskRepo.findAll();
@@ -29,6 +33,8 @@ public class TaskService {
     public Result addTask(TaskDto taskDto) {
         Task task = new Task();
         task.setName(taskDto.getName());
+        Optional<User> byId = userRepo.findById(taskDto.getUserId());
+        task.setUser(byId.get());
         task.setCategory(taskDto.getCategory());
         task.setSolution(taskDto.getSolution());
         task.setQuestion(taskDto.getQuestion());
@@ -43,6 +49,8 @@ public class TaskService {
         if (optionalTask.isPresent()) {
             Task task = optionalTask.get();
             task.setName(taskDto.getName());
+            Optional<User> byId = userRepo.findById(taskDto.getUserId());
+            task.setUser(byId.get());
             task.setCategory(taskDto.getCategory());
             task.setSolution(taskDto.getSolution());
             task.setQuestion(taskDto.getQuestion());

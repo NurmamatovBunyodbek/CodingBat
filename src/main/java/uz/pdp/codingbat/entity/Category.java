@@ -21,5 +21,7 @@ public class Category {
     @Column(nullable = false)
     private Integer startCount;
 
+    @ManyToOne
+    private Language language;
 
 }

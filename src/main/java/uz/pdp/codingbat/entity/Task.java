@@ -27,4 +27,7 @@ public class Task {
     private String answerText;
     @Column(nullable = false)
     private String solution;
+
+    @ManyToOne
+    private User user;
 }

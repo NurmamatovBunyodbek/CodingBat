@@ -3,9 +3,11 @@ package uz.pdp.codingbat.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uz.pdp.codingbat.entity.Category;
+import uz.pdp.codingbat.entity.Language;
 import uz.pdp.codingbat.payload.CategoryDto;
 import uz.pdp.codingbat.payload.Result;
 import uz.pdp.codingbat.repository.CategoryRepo;
+import uz.pdp.codingbat.repository.LanguageRepo;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,8 @@ public class CategoryService {
 
     @Autowired
     CategoryRepo categoryRepo;
+    @Autowired
+    LanguageRepo languageRepo;
 
     public List<Category> getAllList() {
         List<Category> categoryList = categoryRepo.findAll();
@@ -29,6 +33,8 @@ public class CategoryService {
     public Result addCategory(CategoryDto categoryDto) {
         Category category = new Category();
         category.setName(categoryDto.getName());
+        Optional<Language> byId = languageRepo.findById(categoryDto.getLanguageId());
+        category.setLanguage(byId.get());
         category.setDescription(categoryDto.getDescription());
         category.setStartCount(categoryDto.getStartCount());
         categoryRepo.save(category);
@@ -41,6 +47,8 @@ public class CategoryService {
         if (categoryOptional.isPresent()) {
             Category category = categoryOptional.get();
             category.setName(categoryDto.getName());
+            Optional<Language> byId = languageRepo.findById(categoryDto.getLanguageId());
+            category.setLanguage(byId.get());
             category.setDescription(categoryDto.getDescription());
             category.setStartCount(categoryDto.getStartCount());
             categoryRepo.save(category);

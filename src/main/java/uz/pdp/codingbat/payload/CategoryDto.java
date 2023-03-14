@@ -12,5 +12,7 @@ public class CategoryDto {
     private String name;
     private String description;
     private Integer startCount;
+    private Integer languageId;
+
 
 }
